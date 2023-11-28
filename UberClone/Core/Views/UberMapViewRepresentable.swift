@@ -21,7 +21,7 @@ struct UberMapViewRepresentable: UIViewRepresentable {
     
     // in charge of creating the map view
     func makeUIView(context: Context) -> some UIView {
-        // context object gives us access to the coordinator 
+        // context object gives us access to the coordinator
         mapView.delegate = context.coordinator
         // configure map view settings
         mapView.isRotateEnabled = false
@@ -35,7 +35,7 @@ struct UberMapViewRepresentable: UIViewRepresentable {
     func updateUIView(_ uiView: UIViewType, context: Context) {
     }
     
-    // returns our custom class
+    // returns our custom class, creates the coordinator
     func makeCoordinator() -> MapCoordinator {
         return MapCoordinator(parent: self)
     }
