@@ -27,7 +27,6 @@ struct HomeView: View {
             
             // Map Overlay
             VStack {
-               
                 // Search Bar
                 if(showLocationSearchView) {
                     LocationSearchDetailView()
@@ -38,7 +37,6 @@ struct HomeView: View {
                             showLocationSearchView.toggle()
                         }
                 }
-                Spacer()
             }
         }
     }
