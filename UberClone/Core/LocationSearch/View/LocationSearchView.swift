@@ -18,6 +18,7 @@ struct LocationSearchView: View {
                     .padding(.trailing, 14)
                 
                 Text("Please enter target destination.")
+                    .foregroundColor(.black)
                 Spacer()
             }.padding([.leading, .trailing], 12)
         }
@@ -25,7 +26,7 @@ struct LocationSearchView: View {
         // for the padding
         .frame(width: UIScreen.main.bounds.width - 64, height: 50)
         .background(
-            // limit background styling to the rectangle and not all children inside 
+            // limit background styling to the rectangle and not all children inside
             Rectangle()
                 .foregroundColor(.white)
                 .shadow(color: .black, radius: 5)
