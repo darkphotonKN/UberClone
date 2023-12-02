@@ -21,6 +21,8 @@ final class DummyLocation: Identifiable {
 }
 
 struct LocationSearchDetailView: View {
+    // tap into viewModel for the search results
+    @StateObject var viewModel = LocationSearchViewModel()
     
     private var dummyData = [
         DummyLocation(title: "Starbucks Coffee", address: "32, Brookville Avenue, New York"),
@@ -44,10 +46,10 @@ struct LocationSearchDetailView: View {
                     CurrToDestIconView()
                         .padding(.trailing, 12)
                     // Search Inputs
-                    CurrentToDestinationView()
+                    CurrentToDestinationView(queryFragment: $viewModel.queryFragment)
                 }
                 .padding([.leading, .trailing], 20)
-                .padding(.top, 60)
+                .padding(.top, 77)
                 
                 Divider().padding(.vertical, 23)
                 
@@ -55,10 +57,13 @@ struct LocationSearchDetailView: View {
                 ScrollView {
                     VStack {
                         // list out all the search result locations
-                        ForEach(dummyData) { item in
-                            LocationSearchResultView(title: item.title, address: item.address)
+                        ForEach(viewModel.results, id: \.self) { result in
+                            
+                            LocationSearchResultView(title: result.title, description: result.subtitle)
                         }
                     }
+                }.onAppear() {
+                    print("result: \(viewModel.results)")
                 }
                 
             }.background(.white)

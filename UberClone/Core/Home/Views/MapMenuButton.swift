@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MapMenuButton: View {
+    @Binding var showLocationSearchView: Bool
     
     var body: some View {
         ZStack {
@@ -18,7 +19,7 @@ struct MapMenuButton: View {
                 .frame(width: 55, height: 55)
             
             // Menu Button Lines
-            Image(systemName: "line.3.horizontal")
+            Image(systemName: showLocationSearchView ? "arrow.left" : "line.3.horizontal")
                 .resizable()
                 .frame(width: 20, height: 14)
                 .foregroundColor(.black)
@@ -26,7 +27,3 @@ struct MapMenuButton: View {
     }
 }
 
-
-#Preview {
-    MapMenuButton()
-}

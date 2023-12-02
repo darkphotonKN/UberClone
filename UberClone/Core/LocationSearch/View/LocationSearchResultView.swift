@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LocationSearchResultView: View {
     var title: String
-    var address: String
+    var description: String
     
     var body: some View {
         
@@ -27,13 +27,13 @@ struct LocationSearchResultView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(title)
                             .font(.system(size: 22, weight: .medium))
-                        Text(address)
+                        Text(description)
                             .font(.system(size: 18, weight: .light))
                             .foregroundStyle(.gray)
                         
                     }
                     Spacer()
-                }.padding(.bottom, 20)
+                }.padding([.top, .bottom], 20)
                     .padding(.leading, 15)
                 
                 Divider()
@@ -44,5 +44,5 @@ struct LocationSearchResultView: View {
 }
 
 #Preview {
-    LocationSearchResultView(title: "Starbucks Coffee", address: "12th Southville Boulevard, New York")
+    LocationSearchResultView(title: "Starbucks Coffee", description: "12th Southville Boulevard, New York")
 }

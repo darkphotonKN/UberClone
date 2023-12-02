@@ -71,6 +71,3 @@ extension UberMapViewRepresentable {
     
 }
 
-#Preview {
-    HomeView()
-}

@@ -16,14 +16,7 @@ struct HomeView: View {
             // Map
             UberMapViewRepresentable()
                 .ignoresSafeArea()
-            // Map Menu Button Area
-            HStack {
-                MapMenuButton()
-                    .padding(.top, 20)
-                    .padding(.leading, 25)
-                Spacer()
-            }
-            
+                        
             
             // Map Overlay
             VStack {
@@ -32,12 +25,27 @@ struct HomeView: View {
                     LocationSearchDetailView()
                 } else {
                     LocationSearchView()
-                        .padding(.top, 97)
+                        .padding(.top, 77)
                         .onTapGesture {
-                            showLocationSearchView.toggle()
+                            withAnimation(.easeInOut) {
+                                showLocationSearchView.toggle()
+                            }
                         }
                 }
             }
+            
+            // Map Menu Button Area
+            HStack {
+                MapMenuButton(showLocationSearchView: $showLocationSearchView)
+                    .padding(.leading, 25)
+                    .onTapGesture {
+                        withAnimation(.easeInOut) {
+                            showLocationSearchView.toggle()
+                        }
+                    }
+                Spacer()
+            }
+
         }
     }
 }
