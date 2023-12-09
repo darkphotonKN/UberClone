@@ -21,21 +21,12 @@ final class DummyLocation: Identifiable {
 }
 
 struct LocationSearchDetailView: View {
-    // tap into viewModel for the search results
-    @StateObject var viewModel = LocationSearchViewModel()
-    
-    private var dummyData = [
-        DummyLocation(title: "Starbucks Coffee", address: "32, Brookville Avenue, New York"),
-        DummyLocation(title: "Starbucks Coffee", address: "32, Brookville Avenue, New York"),
-        DummyLocation(title: "Starbucks Coffee", address: "32, Brookville Avenue, New York"),
-        DummyLocation(title: "Starbucks Coffee", address: "32, Brookville Avenue, New York"),
-        DummyLocation(title: "Starbucks Coffee", address: "32, Brookville Avenue, New York"),
-        DummyLocation(title: "Starbucks Coffee", address: "32, Brookville Avenue, New York"),
-        DummyLocation(title: "Starbucks Coffee", address: "32, Brookville Avenue, New York"),
-        DummyLocation(title: "Starbucks Coffee", address: "32, Brookville Avenue, New York"),
-        DummyLocation(title: "Dreamers Coffee", address: "12, Nashville St, Kensington, New York"),
-        DummyLocation(title: "The Waterworks of Modern Men", address: "7, South Row Boulevard, New York"),
-    ]
+    // pulling from the global instance of LocationSearchViewModel StateObject
+    // NOT instantiating a new instance
+    @EnvironmentObject var viewModel: LocationSearchViewModel
+
+    // show detail view
+    @Binding var showLocationSearchView: Bool
     
     var body: some View {
        
@@ -60,6 +51,14 @@ struct LocationSearchDetailView: View {
                         ForEach(viewModel.results, id: \.self) { result in
                             
                             LocationSearchResultView(title: result.title, description: result.subtitle)
+                                .onTapGesture {
+                                    // select location
+                                    viewModel.selectLocation(selectedLocation: result.title)
+                                    
+                                    // dismiss detail view
+                                    showLocationSearchView.toggle()
+                                    
+                                }
                         }
                     }
                 }.onAppear() {
@@ -72,5 +71,5 @@ struct LocationSearchDetailView: View {
 }
 
 #Preview {
-    LocationSearchDetailView()
+    LocationSearchDetailView(showLocationSearchView: .constant(false))
 }

@@ -20,15 +20,18 @@ struct HomeView: View {
             
             // Map Overlay
             VStack {
-                // Search Bar
                 if(showLocationSearchView) {
-                    LocationSearchDetailView()
+                    // detail search
+                    LocationSearchDetailView(showLocationSearchView: $showLocationSearchView)
                 } else {
+                    // main search bar
                     LocationSearchView()
                         .padding(.top, 77)
                         .onTapGesture {
                             withAnimation(.easeInOut) {
+                                // toggle back to main view
                                 showLocationSearchView.toggle()
+                                // and show selected location details
                             }
                         }
                 }
