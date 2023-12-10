@@ -53,7 +53,7 @@ struct LocationSearchDetailView: View {
                             LocationSearchResultView(title: result.title, description: result.subtitle)
                                 .onTapGesture {
                                     // select location
-                                    viewModel.selectLocation(selectedLocation: result.title)
+                                    viewModel.selectLocation(selectedLocation: result)
                                     
                                     // dismiss detail view
                                     showLocationSearchView.toggle()

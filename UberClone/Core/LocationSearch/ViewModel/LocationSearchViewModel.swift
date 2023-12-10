@@ -14,7 +14,7 @@ class LocationSearchViewModel: NSObject, ObservableObject {
     
     // helps with autocomplete when entering search term
     @Published var results = [MKLocalSearchCompletion]()
-    @Published var selectedLocation: String?
+    @Published var selectedLocation: CLLocationCoordinate2D?
     
     private let searchCompleter = MKLocalSearchCompleter()
     
@@ -33,10 +33,30 @@ class LocationSearchViewModel: NSObject, ObservableObject {
     }
     
     // Helpers
-    func selectLocation(selectedLocation: String) {
-        self.selectedLocation = selectedLocation
+    func selectLocation(selectedLocation: MKLocalSearchCompletion) {
+        // using the MKLocalSearchCompletion string info of the map 
+        // location selection to search for the actual coordinates of the location
+        locationSearch(forLocalSearchCompletion: selectedLocation) { response, error in // using closure to tap into completion
+            guard let locationSearchRes = response?.mapItems.first  else { return }
+            let coordinate = locationSearchRes.placemark.coordinate
+            
+            self.selectedLocation = coordinate
+        }
         
-        print("DEBUG selectedLocation: \(selectedLocation)")
+    }
+    
+    func locationSearch(forLocalSearchCompletion localSearch: MKLocalSearchCompletion, completion: @escaping MKLocalSearch.CompletionHandler) {
+        
+        // create request string
+        let searchRequest = MKLocalSearch.Request()
+        
+        // search with both the title of the location (name of location) and the subtitle (address of location)
+        searchRequest.naturalLanguageQuery = localSearch.title.appending(localSearch.subtitle)
+        
+        // make search request
+        let search = MKLocalSearch(request: searchRequest)
+        // completion is a callback (completion handler) which takes time
+        search.start(completionHandler: completion)
     }
 }
 

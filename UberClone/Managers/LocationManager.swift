@@ -18,7 +18,6 @@ class LocationManager: NSObject, ObservableObject {
         locationManager.requestWhenInUseAuthorization() // request user permission to use their location when app is being used
         locationManager.startUpdatingLocation() // starts tracking user location
     }
-    
 }
 
 /*
