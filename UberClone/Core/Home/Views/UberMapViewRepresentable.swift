@@ -38,6 +38,8 @@ struct UberMapViewRepresentable: UIViewRepresentable {
     func updateUIView(_ uiView: UIViewType, context: Context) {
         if let selectedLocationCoord = locationViewModel.selectedLocation {
             print("DEBUG: Selected location in map view \(selectedLocationCoord)")
+            // coordinator provides us with the function we created in the extension 
+            context.coordinator.addAndSelectAnnotation(withCoordinate: selectedLocationCoord)
         }
     }
     
@@ -55,13 +57,17 @@ extension UberMapViewRepresentable {
     // the "parent" is how we're going to communicate between
     // this MapCoordinate to the UberMapViewRepresentable
     class MapCoordinator: NSObject, MKMapViewDelegate {
+        
+        // MARK: - Properties
         let parent: UberMapViewRepresentable
         
+        // MARK: - Lifecycle
         init(parent: UberMapViewRepresentable) {
             self.parent = parent
             super.init()
         }
         
+        // MARK: - MKMapViewDelegate
         func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
             // locate user's location and zoom in on their span
             let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
@@ -70,6 +76,15 @@ extension UberMapViewRepresentable {
             // using the parent to update the mapView, again having MapCoordinator
             // be the one that talks to UberMapViewRepresentable, SwiftUI <-> UIKit
             parent.mapView.setRegion(region, animated: true)
+        }
+        
+        // MARK: - Helpers
+        func addAndSelectAnnotation(withCoordinate coordinate: CLLocationCoordinate2D) {
+            let annotation = MKPointAnnotation()
+            
+            annotation.coordinate = coordinate
+            self.parent.mapView.addAnnotation(annotation)
+            self.parent.mapView.selectAnnotation(annotation, animated: true)
         }
         
         
