@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var showLocationSearchView: Bool = false
- 
+    @State private var mapState: MapViewState = MapViewState.noInput
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -20,7 +20,7 @@ struct HomeView: View {
             
             // Map Overlay
             VStack {
-                if(showLocationSearchView) {
+                if(mapState == .noInput) {
                     // detail search
                     LocationSearchDetailView(showLocationSearchView: $showLocationSearchView)
                 } else {

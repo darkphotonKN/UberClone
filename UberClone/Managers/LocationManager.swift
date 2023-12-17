@@ -29,7 +29,6 @@ extension LocationManager: CLLocationManagerDelegate {
     // function that is called when user location updates
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard !locations.isEmpty else { return }
-        print(locations.first)
         // stops location update when we've recieved their inital location,
         // where we can then let our map take over
         locationManager.stopUpdatingLocation()

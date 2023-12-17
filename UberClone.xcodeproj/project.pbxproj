@@ -20,6 +20,7 @@
 		8FE875272B16590600FBF31E /* CurrentToDestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE875262B16590600FBF31E /* CurrentToDestinationView.swift */; };
 		8FE8752E2B1798F600FBF31E /* LocationSearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE8752D2B1798F600FBF31E /* LocationSearchResultView.swift */; };
 		8FE875342B1BA6A000FBF31E /* LocationSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE875332B1BA6A000FBF31E /* LocationSearchViewModel.swift */; };
+		8FF617832B2EE2EB00B349E6 /* MapViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF617822B2EE2EB00B349E6 /* MapViewState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		8FE875262B16590600FBF31E /* CurrentToDestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentToDestinationView.swift; sourceTree = "<group>"; };
 		8FE8752D2B1798F600FBF31E /* LocationSearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchResultView.swift; sourceTree = "<group>"; };
 		8FE875332B1BA6A000FBF31E /* LocationSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewModel.swift; sourceTree = "<group>"; };
+		8FF617822B2EE2EB00B349E6 /* MapViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 		8FB6DC4F2B14AC24007C3943 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8FF617822B2EE2EB00B349E6 /* MapViewState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				8FE8752E2B1798F600FBF31E /* LocationSearchResultView.swift in Sources */,
 				8FE8751F2B1609A900FBF31E /* LocationSearchView.swift in Sources */,
 				8FE875212B16548900FBF31E /* MapMenuButton.swift in Sources */,
+				8FF617832B2EE2EB00B349E6 /* MapViewState.swift in Sources */,
 				8FB6DC572B14B9D4007C3943 /* LocationManager.swift in Sources */,
 				8FB6DC3B2B14ABE8007C3943 /* UberCloneApp.swift in Sources */,
 				8FE875342B1BA6A000FBF31E /* LocationSearchViewModel.swift in Sources */,
