@@ -14,6 +14,7 @@ import MapKit
 
 struct UberMapViewRepresentable: UIViewRepresentable {
     let mapView = MKMapView()
+    @Binding var mapState: MapViewState
     
     // initialize location manager to request user's persmission to track their location
     // and to carry out the tracking
@@ -46,6 +47,11 @@ struct UberMapViewRepresentable: UIViewRepresentable {
             // use coordinator to get access to configurePolyline and draw the route with user-selected coords 
             context.coordinator.configurePolyline(withDestinationCoordinate: selectedLocationCoord)
         }
+        
+        // every time the map view re-renders during no input we want to clear the map and re-center
+        if (mapState == .noInput) {
+            context.coordinator.clearMapViewAndCenter()
+        }
     }
     
     // returns our custom class, creates the coordinator
@@ -63,6 +69,7 @@ extension UberMapViewRepresentable {
     // this MapCoordinate to the UberMapViewRepresentable
     class MapCoordinator: NSObject, MKMapViewDelegate {
         var userLocationCoordinate: CLLocationCoordinate2D?
+        var currentRegion: MKCoordinateRegion?
         
         // MARK: - Properties
         let parent: UberMapViewRepresentable
@@ -81,6 +88,9 @@ extension UberMapViewRepresentable {
             // locate user's location and zoom in on their span
             let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
             )
+            
+            // update our currentRegion state which is used when clearing the map
+            currentRegion = region
             
             // using the parent to update the mapView, again having MapCoordinator
             // be the one that talks to UberMapViewRepresentable, SwiftUI <-> UIKit
@@ -119,7 +129,11 @@ extension UberMapViewRepresentable {
         // draw map line between user location and target destination
         func configurePolyline(withDestinationCoordinate coordinate: CLLocationCoordinate2D) {
             guard let userLocationCoordinate = self.userLocationCoordinate else { return }
-                               
+            
+            // check for any old polylines sand remove them
+            self.parent.mapView.removeOverlays(self.parent.mapView.overlays)
+            
+            // get destination route and add overlay via new polyline
             getDestinationRoute(from: userLocationCoordinate, to: coordinate) { route in
                 // draw the polyline on the mapView by using an overlay and drawing with the polyline
                 // from the route provided from the completion handler
@@ -157,6 +171,17 @@ extension UberMapViewRepresentable {
             }
         }
         
+        // clear map view annotations and overlays and recenters on user location
+        func clearMapViewAndCenter() {
+//            parent.mapView.removeAnnotations(parent.mapView.annotations)
+            parent.mapView.removeOverlays(parent.mapView.overlays)
+            
+            if let currentRegion = currentRegion {
+                parent.mapView.setRegion(currentRegion, animated: true)
+            }
+        }
+        
+       
         
     }
     

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MapMenuButton: View {
-    @Binding var showLocationSearchView: Bool
+    @Binding var mapState: MapViewState
     
     var body: some View {
         ZStack {
@@ -19,10 +19,27 @@ struct MapMenuButton: View {
                 .frame(width: 55, height: 55)
             
             // Menu Button Lines
-            Image(systemName: showLocationSearchView ? "arrow.left" : "line.3.horizontal")
+            Image(systemName: renderMapMenuIcon())
                 .resizable()
                 .frame(width: 20, height: 14)
                 .foregroundColor(.black)
+        }
+    }
+    
+    func renderMapMenuIcon() -> String {
+        
+        switch(mapState) {
+        case .searchingForLocation:
+            return "arrow.left"
+        
+        case .noInput:
+            return "line.3.horizontal"
+        
+        case .locationSelected:
+            return "arrow.left"
+        
+        default:
+            return "line.3.horizontal"
         }
     }
 }

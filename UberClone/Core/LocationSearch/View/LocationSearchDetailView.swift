@@ -26,7 +26,7 @@ struct LocationSearchDetailView: View {
     @EnvironmentObject var viewModel: LocationSearchViewModel
 
     // show detail view
-    @Binding var showLocationSearchView: Bool
+    @Binding var mapState: MapViewState
     
     var body: some View {
        
@@ -56,7 +56,7 @@ struct LocationSearchDetailView: View {
                                     viewModel.selectLocation(selectedLocation: result)
                                     
                                     // dismiss detail view
-                                    showLocationSearchView.toggle()
+                                    mapState = .locationSelected
                                     
                                 }
                         }
@@ -71,5 +71,5 @@ struct LocationSearchDetailView: View {
 }
 
 #Preview {
-    LocationSearchDetailView(showLocationSearchView: .constant(false))
+    LocationSearchDetailView(mapState: .constant(MapViewState.searchingForLocation))
 }

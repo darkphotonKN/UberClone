@@ -8,47 +8,62 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var showLocationSearchView: Bool = false
     @State private var mapState: MapViewState = MapViewState.noInput
     
     var body: some View {
         ZStack(alignment: .top) {
-            // Map
-            UberMapViewRepresentable()
+            // Map View
+            UberMapViewRepresentable(mapState: $mapState)
                 .ignoresSafeArea()
                         
             
             // Map Overlay
             VStack {
+                // in non-search mode
                 if(mapState == .noInput) {
-                    // detail search
-                    LocationSearchDetailView(showLocationSearchView: $showLocationSearchView)
-                } else {
-                    // main search bar
+                    // show main search bar and map
                     LocationSearchView()
                         .padding(.top, 77)
                         .onTapGesture {
                             withAnimation(.easeInOut) {
                                 // toggle back to main view
-                                showLocationSearchView.toggle()
+                                mapState = .searchingForLocation
                                 // and show selected location details
                             }
                         }
+                } else if(mapState == .searchingForLocation) {
+                    // detail search
+                    LocationSearchDetailView(mapState: $mapState)
                 }
             }
             
             // Map Menu Button Area
             HStack {
-                MapMenuButton(showLocationSearchView: $showLocationSearchView)
+                MapMenuButton(mapState: $mapState)
                     .padding(.leading, 25)
                     .onTapGesture {
                         withAnimation(.easeInOut) {
-                            showLocationSearchView.toggle()
+                            actionForState(state: mapState)
                         }
                     }
                 Spacer()
             }
 
+        }
+    }
+    
+    // determining how the MapMenuButton should mutate view
+    // state based on current map view state
+    func actionForState(state: MapViewState) {
+        switch state {
+        case .searchingForLocation:
+            mapState = .noInput
+            break
+        case .noInput:
+            mapState = .noInput
+            break
+        case .locationSelected:
+            mapState = .noInput
         }
     }
 }
