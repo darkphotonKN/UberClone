@@ -26,18 +26,15 @@ struct MapMenuButton: View {
         }
     }
     
+    // determine what type of map menu icon to render based on mapState
     func renderMapMenuIcon() -> String {
-        
         switch(mapState) {
         case .searchingForLocation:
             return "arrow.left"
-        
         case .noInput:
             return "line.3.horizontal"
-        
         case .locationSelected:
             return "arrow.left"
-        
         default:
             return "line.3.horizontal"
         }

@@ -13,8 +13,11 @@ struct HomeView: View {
     var body: some View {
         ZStack(alignment: .top) {
             // Map View
-            UberMapViewRepresentable(mapState: $mapState)
-                .ignoresSafeArea()
+            ZStack {
+                UberMapViewRepresentable(mapState: $mapState)
+                    .ignoresSafeArea()
+                RideRequestView()
+            }
                         
             
             // Map Overlay

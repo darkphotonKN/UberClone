@@ -38,20 +38,31 @@ struct UberMapViewRepresentable: UIViewRepresentable {
     // for updating the map
     func updateUIView(_ uiView: UIViewType, context: Context) {
         
-        if let selectedLocationCoord = locationViewModel.selectedLocation {
-            print("DEBUG: Selected location in map view \(selectedLocationCoord)")
-            // coordinator provides us with the function we created in the extension
+        switch mapState {
             
-            // use coordinator to get access to addAndSelectAnnotation and draw them user user-selected coords
-            context.coordinator.addAndSelectAnnotation(withCoordinate: selectedLocationCoord)
-            // use coordinator to get access to configurePolyline and draw the route with user-selected coords 
-            context.coordinator.configurePolyline(withDestinationCoordinate: selectedLocationCoord)
+        // every time the map view re-renders during no input we want to clear the map and re-center
+        case .noInput:
+            context.coordinator.clearMapViewAndCenter()
+            break
+            
+        // location selected, we add and select the annotations and configure and draw polylines
+        case .locationSelected:
+            if let selectedLocationCoord = locationViewModel.selectedLocation {
+                print("DEBUG: Selected location in map view \(selectedLocationCoord)")
+                // coordinator provides us with the function we created in the extension
+                
+                // use coordinator to get access to addAndSelectAnnotation and draw them user user-selected coords
+                context.coordinator.addAndSelectAnnotation(withCoordinate: selectedLocationCoord)
+                // use coordinator to get access to configurePolyline and draw the route with user-selected coords
+                context.coordinator.configurePolyline(withDestinationCoordinate: selectedLocationCoord)
+            }
+            break
+        
+        // do nothing when user is inputing search location
+        case .searchingForLocation:
+            break
         }
         
-        // every time the map view re-renders during no input we want to clear the map and re-center
-        if (mapState == .noInput) {
-            context.coordinator.clearMapViewAndCenter()
-        }
     }
     
     // returns our custom class, creates the coordinator
@@ -139,7 +150,6 @@ extension UberMapViewRepresentable {
                 // from the route provided from the completion handler
                 self.parent.mapView.addOverlay(route.polyline)
             }
-        
         }
         
         // gets destination route
@@ -169,11 +179,13 @@ extension UberMapViewRepresentable {
                 
                 completion(route)
             }
+            
+            
         }
         
         // clear map view annotations and overlays and recenters on user location
         func clearMapViewAndCenter() {
-//            parent.mapView.removeAnnotations(parent.mapView.annotations)
+            parent.mapView.removeAnnotations(parent.mapView.annotations)
             parent.mapView.removeOverlays(parent.mapView.overlays)
             
             if let currentRegion = currentRegion {
@@ -187,3 +199,6 @@ extension UberMapViewRepresentable {
     
 }
 
+#Preview {
+    HomeView()
+}
