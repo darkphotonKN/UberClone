@@ -9,6 +9,7 @@ import SwiftUI
 import MapKit
 
 /*
+ The Primary Map View of this Application
  Making mapkit from uikit useable in SwiftUI
  */
 
@@ -134,21 +135,34 @@ extension UberMapViewRepresentable {
             parent.mapView.selectAnnotation(annotation, animated: true)
             
             // zoom out to show all pins (with animation)
-            parent.mapView.showAnnotations(parent.mapView.annotations, animated: true)
+            // parent.mapView.showAnnotations(parent.mapView.annotations, animated: true)
+            // ^ this job has been moved to configurePolyline with a more specific region
+            // of the map
         }
         
         // draw map line between user location and target destination
         func configurePolyline(withDestinationCoordinate coordinate: CLLocationCoordinate2D) {
             guard let userLocationCoordinate = self.userLocationCoordinate else { return }
             
-            // check for any old polylines sand remove them
-            self.parent.mapView.removeOverlays(self.parent.mapView.overlays)
-            
+
             // get destination route and add overlay via new polyline
             getDestinationRoute(from: userLocationCoordinate, to: coordinate) { route in
+                // check for any old polylines sand remove them
+                self.parent.mapView.removeOverlays(self.parent.mapView.overlays)
+                
+                print("DEBUG: current overlays BEFORE: \(self.parent.mapView.overlays)")
+                
                 // draw the polyline on the mapView by using an overlay and drawing with the polyline
                 // from the route provided from the completion handler
                 self.parent.mapView.addOverlay(route.polyline)
+                
+                print("DEBUG: current overlays AFTER: \(self.parent.mapView.overlays)")
+                
+                // create a smaller region of map to fit directly above our
+                // search result view complete with polyline overlayed on top
+                let rect = self.parent.mapView.mapRectThatFits(route.polyline.boundingMapRect, edgePadding: .init(top: 64, left: 32, bottom: 500, right: 32))
+                
+//                 self.parent.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
             }
         }
         

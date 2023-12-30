@@ -9,16 +9,17 @@ import Foundation
 import SwiftUI
 
 struct RideRequestView: View  {
-    
     var shape = ShapeDimensions(height: 8, width: 8)
     var viewVerticalSpacing: CGFloat = 4 // spacing shared between each view
-    var viewCornerRadius: CGFloat = 10 // corner radius for each view area 
+    var viewCornerRadius: CGFloat = 10 // corner radius for each view area
+    
     
     var body: some View {
         VStack {
             Capsule()
                 .foregroundStyle(Color(.systemGray5))
                 .frame(width: 48, height: 6)
+                .padding(.top, viewVerticalSpacing)
             
             // Trip Info View
             HStack {
@@ -38,8 +39,9 @@ struct RideRequestView: View  {
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundColor(.gray)
                     }
-                    .padding(.bottom, 9)
-                    .padding(.top, 1)
+                    
+                    Spacer().frame(maxHeight: 27)
+                    
                     // Destination Location
                     HStack {
                         Text("Starbucks Coffee")
@@ -50,7 +52,7 @@ struct RideRequestView: View  {
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundColor(.gray)
                     }
-                    .padding(.top, 11)
+                    
                 }
                 .padding(.leading, 5)
             }.padding()
@@ -85,7 +87,10 @@ struct RideRequestView: View  {
             .padding([.leading, .trailing], 20)
             .padding([.top, .bottom], 10)
         }
+        .padding(.bottom, 15)
         .background(.white)
+        .cornerRadius(10)
+       
     }
 }
 

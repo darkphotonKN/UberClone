@@ -52,11 +52,14 @@ struct LocationSearchDetailView: View {
                             
                             LocationSearchResultView(title: result.title, description: result.subtitle)
                                 .onTapGesture {
-                                    // select location
-                                    viewModel.selectLocation(selectedLocation: result)
-                                    
-                                    // dismiss detail view
-                                    mapState = .locationSelected
+                                    // with spring animation for Request Ride View popping up
+                                    withAnimation(.spring()) {
+                                        // select location
+                                        viewModel.selectLocation(selectedLocation: result)
+                                        
+                                        // dismiss detail view
+                                        mapState = .locationSelected
+                                    }
                                     
                                 }
                         }

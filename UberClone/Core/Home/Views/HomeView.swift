@@ -12,15 +12,20 @@ struct HomeView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            // Map View
-            ZStack {
+            ZStack(alignment: .bottom) {
+                // Map
                 UberMapViewRepresentable(mapState: $mapState)
                     .ignoresSafeArea()
-                RideRequestView()
+                // Ride Request Information
+                // show Ride Request View after user chooses a location
+                if(mapState == .locationSelected) {
+                    RideRequestView()
+                        .transition(.move(edge: .bottom)) // pairs with withAnimation to spring up from the bottom of the screen
+                }
             }
                         
             
-            // Map Overlay
+            // Map Search Input Overlay
             VStack {
                 // in non-search mode
                 if(mapState == .noInput) {
@@ -40,7 +45,7 @@ struct HomeView: View {
                 }
             }
             
-            // Map Menu Button Area
+            // Map Menu Button
             HStack {
                 MapMenuButton(mapState: $mapState)
                     .padding(.leading, 25)
@@ -52,7 +57,7 @@ struct HomeView: View {
                 Spacer()
             }
 
-        }
+        }.edgesIgnoringSafeArea(.bottom)
     }
     
     // determining how the MapMenuButton should mutate view
