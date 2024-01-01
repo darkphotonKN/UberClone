@@ -9,10 +9,13 @@ import Foundation
 import SwiftUI
 
 struct SuggestedRidesSelectionView: View {
+    @State private var selectedRide: RideType = .uberX
     var cornerRadius: CGFloat
     
     var body: some View {
         VStack {
+            Text("")
+                
             // Title
             HStack {
                 Text("SUGGESTED RIDES")
@@ -25,17 +28,19 @@ struct SuggestedRidesSelectionView: View {
                 HStack(spacing: 12) {
                     // Iterate through all suggested rides, offering scroll
                     // for off-screen options
-                    ForEach(0..<3, id: \.self) { _ in
+                    ForEach(RideType.allCases) { ride in
+                        
+                        // MARK: Single Ride Block
                         VStack {
                             VStack {
                                 // Vehicle Image
-                                Image("uber-x")
+                                Image(ride.imageName)
                                     .resizable()
                                     .scaledToFit()
                                 HStack {
                                     VStack {
                                         // Name of Vehicle
-                                        Text("Uber-X")
+                                        Text(ride.description)
                                             .font(.system(size: 14, weight: .semibold))
                                         // Pricing
                                         Text("$22.04")
@@ -46,9 +51,15 @@ struct SuggestedRidesSelectionView: View {
                                 
                             }
                             .frame(width: 110, height: 144)
-                            .background(Color(.systemGroupedBackground))
+                            .scaleEffect(ride == selectedRide ? 1.1 : 1)
+                            .foregroundStyle(ride == selectedRide ? .white : .black)
+                            .background(Color(ride == selectedRide ? .systemBlue : .systemGroupedBackground))
                             .cornerRadius(cornerRadius)
                        
+                        }.onTapGesture {
+                            withAnimation(.spring()) {
+                                selectedRide = ride
+                            }
                         }
                     }
                 }

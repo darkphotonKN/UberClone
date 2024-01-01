@@ -36,7 +36,7 @@ class LocationSearchViewModel: NSObject, ObservableObject {
     func selectLocation(selectedLocation: MKLocalSearchCompletion) {
         // using the MKLocalSearchCompletion string info of the map 
         // location selection to search for the actual coordinates of the location
-        locationSearch(forLocalSearchCompletion: selectedLocation) { response, error in // using closure to tap into completion
+        locationSearch(forLocalSearchCompletion: selectedLocation) { response, error in 
             guard let locationSearchRes = response?.mapItems.first  else { return }
             let coordinate = locationSearchRes.placemark.coordinate
             

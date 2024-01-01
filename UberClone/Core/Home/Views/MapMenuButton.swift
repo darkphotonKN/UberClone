@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MapMenuButton: View {
     @Binding var mapState: MapViewState
+    @EnvironmentObject var locationSearchViewModel: LocationSearchViewModel
     
     var body: some View {
         ZStack {
@@ -23,7 +24,12 @@ struct MapMenuButton: View {
                 .resizable()
                 .frame(width: 20, height: 14)
                 .foregroundColor(.black)
-        }
+        }.padding(.leading, 25)
+            .onTapGesture {
+                withAnimation(.easeInOut) {
+                    actionForState(state: mapState)
+                }
+            }
     }
     
     // determine what type of map menu icon to render based on mapState
@@ -37,6 +43,24 @@ struct MapMenuButton: View {
             return "arrow.left"
         default:
             return "line.3.horizontal"
+        }
+    }
+    
+    // determining how the MapMenuButton should mutate view
+    // state based on current map view state
+    func actionForState(state: MapViewState) {
+        switch state {
+        case .searchingForLocation:
+            mapState = .noInput
+            break
+        case .noInput:
+            mapState = .noInput
+            break
+        case .locationSelected:
+            // return to noInput state
+            mapState = .noInput
+            // clear previously selected location
+            locationSearchViewModel.selectedLocation = nil
         }
     }
 }

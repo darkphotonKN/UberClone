@@ -147,10 +147,6 @@ extension UberMapViewRepresentable {
 
             // get destination route and add overlay via new polyline
             getDestinationRoute(from: userLocationCoordinate, to: coordinate) { route in
-                // check for any old polylines sand remove them
-                self.parent.mapView.removeOverlays(self.parent.mapView.overlays)
-                
-                print("DEBUG: current overlays BEFORE: \(self.parent.mapView.overlays)")
                 
                 // draw the polyline on the mapView by using an overlay and drawing with the polyline
                 // from the route provided from the completion handler
@@ -162,7 +158,7 @@ extension UberMapViewRepresentable {
                 // search result view complete with polyline overlayed on top
                 let rect = self.parent.mapView.mapRectThatFits(route.polyline.boundingMapRect, edgePadding: .init(top: 64, left: 32, bottom: 500, right: 32))
                 
-//                 self.parent.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
+                self.parent.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
             }
         }
         
