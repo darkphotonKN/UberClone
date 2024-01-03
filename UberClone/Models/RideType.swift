@@ -34,4 +34,29 @@ enum RideType: Int, CaseIterable, Identifiable {
         }
     }
     
+    var baseFare: Double {
+        switch self {
+        case.uberX:
+            return 8
+        case.uberXL:
+            return 20
+        case.black:
+            return 25
+        }
+    }
+    
+    // calculates price based on distance of trip
+    func calcTotalFare(distance distanceInMeters: Double) -> Double {
+        let distanceInKm = distanceInMeters / 1000
+        
+        switch self {
+        case.uberX:
+            return distanceInKm*1.2 + baseFare
+        case.uberXL:
+            return distanceInKm*1.5 + baseFare
+        case.black:
+            return distanceInKm*2.3 + baseFare
+        }
+    }
+    
 }

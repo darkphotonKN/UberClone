@@ -7,19 +7,6 @@
 
 import SwiftUI
 
-
-// temp dummy Model
-final class DummyLocation: Identifiable {
-    var id = UUID()
-    var title: String
-    var address: String
-    
-    init(title: String, address: String) {
-        self.title = title
-        self.address = address
-    }
-}
-
 struct LocationSearchDetailView: View {
     // pulling from the global instance of LocationSearchViewModel StateObject
     // NOT instantiating a new instance

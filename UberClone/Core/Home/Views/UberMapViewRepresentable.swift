@@ -19,10 +19,12 @@ struct UberMapViewRepresentable: UIViewRepresentable {
     
     // initialize location manager to request user's persmission to track their location
     // and to carry out the tracking
-    let locationManger = LocationManager()
+    // let locationManger = LocationManager() // old code of using multiple instances
+    let locationManager = LocationManager.shared
+    
     
     // pulling from global instance of the locationViewModel, casting it and not re-intializing it
-    @EnvironmentObject var locationViewModel: LocationSearchViewModel
+    @EnvironmentObject var locationSearchViewModel: LocationSearchViewModel
     
     // in charge of creating the map view
     func makeUIView(context: Context) -> some UIView {
@@ -48,7 +50,7 @@ struct UberMapViewRepresentable: UIViewRepresentable {
             
         // location selected, we add and select the annotations and configure and draw polylines
         case .locationSelected:
-            if let selectedLocationCoord = locationViewModel.selectedLocation {
+            if let selectedLocationCoord = locationSearchViewModel.selectedLocation?.coordinate {
                 print("DEBUG: Selected location in map view \(selectedLocationCoord)")
                 // coordinator provides us with the function we created in the extension
                 
@@ -146,7 +148,7 @@ extension UberMapViewRepresentable {
             
 
             // get destination route and add overlay via new polyline
-            getDestinationRoute(from: userLocationCoordinate, to: coordinate) { route in
+            self.parent.locationSearchViewModel.getDestinationRoute(from: userLocationCoordinate, to: coordinate) { route in
                 
                 // draw the polyline on the mapView by using an overlay and drawing with the polyline
                 // from the route provided from the completion handler
@@ -162,36 +164,6 @@ extension UberMapViewRepresentable {
             }
         }
         
-        // gets destination route
-        func getDestinationRoute(from userLocation: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D, completion: @escaping(MKRoute) -> Void) {
-        
-            // create placemarks
-            let userPlacemark = MKPlacemark(coordinate: userLocation)
-            let destinationPlacemark = MKPlacemark(coordinate: destination)
-            
-            // use placemarks to draw line
-            
-            let request = MKDirections.Request()
-            // draw start
-            request.source = MKMapItem(placemark: userPlacemark)
-            // draw end
-            request.destination = MKMapItem(placemark: destinationPlacemark)
-            
-            let directions = MKDirections(request: request)
-            
-            // this is a request API which means it must be handled by a completion handler (callback)
-            directions.calculate { response, error in
-                if let error = error {
-                    print("DEBUG: Failed to get direction with error")
-                }
-                
-                guard let route = response?.routes.first else { return }
-                
-                completion(route)
-            }
-            
-            
-        }
         
         // clear map view annotations and overlays and recenters on user location
         func clearMapViewAndCenter() {

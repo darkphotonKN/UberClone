@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct SuggestedRidesSelectionView: View {
+    @EnvironmentObject var locationSearchViewModel: LocationSearchViewModel
     @State private var selectedRide: RideType = .uberX
     var cornerRadius: CGFloat
     
@@ -38,12 +39,13 @@ struct SuggestedRidesSelectionView: View {
                                     .resizable()
                                     .scaledToFit()
                                 HStack {
-                                    VStack {
+                                    VStack(alignment: .leading) {
                                         // Name of Vehicle
                                         Text(ride.description)
                                             .font(.system(size: 14, weight: .semibold))
                                         // Pricing
-                                        Text("$22.04")
+                                        Text(locationSearchViewModel.calcRidePrice(rideType: ride).toCurrency())
+//                                        Text("$12.22")
                                             .font(.system(size: 14, weight: .semibold))
                                     }
                                     Spacer()

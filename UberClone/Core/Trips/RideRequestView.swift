@@ -13,7 +13,8 @@ struct RideRequestView: View  {
     var viewVerticalSpacing: CGFloat = 4 // spacing shared between each view
     var viewCornerRadius: CGFloat = 10 // corner radius for each view area
     
-    
+    @EnvironmentObject var locationSearchViewModel: LocationSearchViewModel
+
     var body: some View {
         VStack {
             Capsule()
@@ -31,26 +32,38 @@ struct RideRequestView: View  {
                 VStack(alignment: .leading) {
                     // Current Location
                     HStack {
-                        Text("Current Location")
-                            .font(.system(size: 16, weight: .semibold))
-                            .foregroundStyle(.gray)
-                        Spacer()
-                        Text("1:30 PM")
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundColor(.gray)
+                        if let pickupTime = locationSearchViewModel.rideTimes?.pickupTime {
+                            Text("Current Location")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundStyle(.gray)
+                            Spacer()
+                            Text(pickupTime)
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(.gray)
+                        }
                     }
                     
                     Spacer().frame(maxHeight: 27)
                     
                     // Destination Location
                     HStack {
-                        Text("Starbucks Coffee")
-                            .font(.system(size: 16, weight: .semibold))
-                        
-                        Spacer()
-                        Text("1:47 PM")
-                            .font(.system(size: 14, weight: .semibold))
-                            .foregroundColor(.gray)
+                        if let destLocationTitle = locationSearchViewModel.selectedLocation?.title, let dropoffTime = locationSearchViewModel.rideTimes?.dropoffTime {
+                            Text(destLocationTitle)
+                                .font(.system(size: 16, weight: .semibold))
+                            Spacer()
+                            Text(dropoffTime)
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(.gray)
+                        } else {
+                            // shows while location is searching
+                            Text("")
+                                .font(.system(size: 16, weight: .semibold))
+                            Spacer()
+                            Text("")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(.gray)
+                        }
+                            
                     }
                     
                 }
