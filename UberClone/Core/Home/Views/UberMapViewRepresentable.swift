@@ -48,10 +48,11 @@ struct UberMapViewRepresentable: UIViewRepresentable {
             context.coordinator.clearMapViewAndCenter()
             break
             
+            
         // location selected, we add and select the annotations and configure and draw polylines
         case .locationSelected:
             if let selectedLocationCoord = locationSearchViewModel.selectedLocation?.coordinate {
-                print("DEBUG: Selected location in map view \(selectedLocationCoord)")
+                print("DEBUG: Adding stuff to map!")
                 // coordinator provides us with the function we created in the extension
                 
                 // use coordinator to get access to addAndSelectAnnotation and draw them user user-selected coords
