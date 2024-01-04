@@ -99,6 +99,9 @@ extension UberMapViewRepresentable {
         func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
             // set class-level user location
             self.userLocationCoordinate = userLocation.coordinate
+                        
+            // also update it for the LocationSearchViewModel
+            self.parent.locationSearchViewModel
             
             // locate user's location and zoom in on their span
             let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)

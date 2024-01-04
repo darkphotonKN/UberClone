@@ -42,10 +42,16 @@ struct LocationSearchDetailView: View {
                                     // with spring animation for Request Ride View popping up
                                     withAnimation(.spring()) {
                                         // select location
-                                        viewModel.selectLocation(selectedLocation: result)
+                                        viewModel.selectLocation(selectedLocation: result) {
+                                            // only fire when selectLocation string of tasks are done
+                                            
+                                            // dismiss detail view and go to map journey view
+                                            mapState = .locationSelected
+                                            
+                                            // find and set ride times
+                                            viewModel.analyzePickupAndDropoffTime()
+                                        }
                                         
-                                        // dismiss detail view
-                                        mapState = .locationSelected
                                     }
                                     
                                 }
@@ -58,6 +64,8 @@ struct LocationSearchDetailView: View {
             }.background(.white)
         
     }
+    
+    
 }
 
 #Preview {

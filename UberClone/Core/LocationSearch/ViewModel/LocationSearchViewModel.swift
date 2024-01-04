@@ -7,6 +7,7 @@
 
 import Foundation
 import MapKit
+import SwiftUI
 
 class LocationSearchViewModel: NSObject, ObservableObject {
     
@@ -20,6 +21,15 @@ class LocationSearchViewModel: NSObject, ObservableObject {
         }
     }
     @Published var rideTimes: RideTimes?
+  
+    
+    // local state for handling ride times
+    private var route: MKRoute?
+//    {
+//        didSet {
+//            analyzePickupAndDropoffTime()
+//        }
+//    }
     
     // store user location
     var userLocation: CLLocationCoordinate2D? {
@@ -49,8 +59,8 @@ class LocationSearchViewModel: NSObject, ObservableObject {
     // Helpers
     
     // sets selectedLocation with the location coordinate based on the MKLocalSearchCompletion selected
-    func selectLocation(selectedLocation: MKLocalSearchCompletion) {
-        // using the MKLocalSearchCompletion string info of the map 
+    func selectLocation(selectedLocation: MKLocalSearchCompletion, completion: @escaping () -> Void) {
+        // using the MKLocalSearchCompletion string info of the map
         // location selection to search for the actual coordinates of the location
         locationSearch(forLocalSearchCompletion: selectedLocation) { response, error in
             
@@ -66,6 +76,10 @@ class LocationSearchViewModel: NSObject, ObservableObject {
             let uberLocation = UberLocation(title: selectedLocation.title, coordinate: coordinate)
             
             self.selectedLocation = uberLocation
+            
+            
+            // notify that the task of selecting and updating location is done
+            completion()
         }
         
     }
@@ -130,24 +144,57 @@ class LocationSearchViewModel: NSObject, ObservableObject {
             
             guard let route = response?.routes.first else { return }
             
+            // store route for other local state usage
+            // self.route = route
+            
             // calculate destination time
-            self.analyzePickupAndDropoffTime(expectedTravelTime: route.expectedTravelTime) // provided from directions from MKDirections
+            
+            // remove this to fix endless state updates bug
+            // self.analyzePickupAndDropoffTime(expectedTravelTime: route.expectedTravelTime) // provided from directions from MKDirections
             
             completion(route)
         }
     }
     
     // sets the time for destination
-    func analyzePickupAndDropoffTime(expectedTravelTime: Double) {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "hh:mm a"
+    func analyzePickupAndDropoffTime() {
+        guard let userLocation = self.userLocation else { return }
+        print("DEBUG: @analyzePickupAndDropoffTime userLocation - \(userLocation)")
+        guard let destinationLocation = self.selectedLocation?.coordinate else { return }
+        print("DEBUG: @analyzePickupAndDropoffTime destinationLocation - \(destinationLocation)")
         
-        let pickupTime = formatter.string(from: Date()) // converts the date-time now to our required format
-        let dropoffTime = formatter.string(from: Date().addingTimeInterval(expectedTravelTime))
+        let userPlacemark = MKPlacemark(coordinate: userLocation)
+        let destinationPlacemark = MKPlacemark(coordinate: destinationLocation)
+        
+        let request = MKDirections.Request()
+        
+        request.source = MKMapItem(placemark: userPlacemark)
+        request.destination = MKMapItem(placemark: destinationPlacemark)
+        
+        let directions = MKDirections(request: request)
+        
+        directions.calculate { response, error in
+            if let error = error {
+                return
+            }
+            
+            guard let route = response?.routes.first else { return }
+            
+            print("DEBUG: route - \(route)")
+            let expectedTravelTime = route.expectedTravelTime
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "hh:mm a"
+            
+            let pickupTime = formatter.string(from: Date()) // converts the date-time now to our required format
+            let dropoffTime = formatter.string(from: Date().addingTimeInterval(expectedTravelTime))
 
-        print("pickupTime: \(pickupTime), \n dropoffTime: \(dropoffTime)")
-        let rideTimes = RideTimes(pickupTime: pickupTime, dropoffTime: dropoffTime)
-        self.rideTimes = rideTimes
+            let rideTimes = RideTimes(pickupTime: pickupTime, dropoffTime: dropoffTime)
+            self.rideTimes = rideTimes
+            
+        }
+        
+       
     }
     
 }
