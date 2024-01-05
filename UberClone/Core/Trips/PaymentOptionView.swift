@@ -32,7 +32,7 @@ struct PaymentOptionView: View {
             .frame(maxWidth: .infinity)
             .padding()
         }
-        .background(Color(.systemGroupedBackground))
+        .background(Color.colorTheme.secondaryBgColor)
         .cornerRadius(cornerRadius)
         
     }

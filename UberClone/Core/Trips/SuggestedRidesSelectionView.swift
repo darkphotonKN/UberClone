@@ -53,9 +53,9 @@ struct SuggestedRidesSelectionView: View {
                                 
                             }
                             .frame(width: 110, height: 144)
-                            .scaleEffect(ride == selectedRide ? 1.1 : 1)
-                            .foregroundStyle(ride == selectedRide ? .white : .black)
-                            .background(Color(ride == selectedRide ? .systemBlue : .systemGroupedBackground))
+                            .scaleEffect(ride == selectedRide ? 1.05 : 1)
+                            .foregroundStyle(ride == selectedRide ? .white : Color.colorTheme.textColor)
+                            .background(ride == selectedRide ? Color(.systemBlue) : Color.colorTheme.secondaryBgColor)
                             .cornerRadius(cornerRadius)
                        
                         }.onTapGesture {

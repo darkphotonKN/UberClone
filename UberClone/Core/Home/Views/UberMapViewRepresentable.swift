@@ -118,7 +118,7 @@ extension UberMapViewRepresentable {
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) ->
             MKOverlayRenderer {
                 let polyline = MKPolylineRenderer(overlay: overlay)
-                polyline.strokeColor = .systemBrown
+                polyline.strokeColor = UIColor(Color.colorTheme.reverseBgColor)
                 polyline.lineWidth = 6
                 return polyline
             }
@@ -145,6 +145,7 @@ extension UberMapViewRepresentable {
             // ^ this job has been moved to configurePolyline with a more specific region
             // of the map
         }
+        
         
         // draw map line between user location and target destination
         func configurePolyline(withDestinationCoordinate coordinate: CLLocationCoordinate2D) {

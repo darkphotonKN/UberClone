@@ -88,7 +88,7 @@ struct RideRequestView: View  {
                 } label: {
                     Text("CONFIRM RIDE")
                         .frame(maxWidth: .infinity)
-                        .font(.system(size: 18, weight: .semibold))
+                        .font(.system(size: 16, weight: .semibold))
                         .foregroundStyle(.white)
                         .padding(.vertical)
                         .background(.blue)
@@ -101,7 +101,7 @@ struct RideRequestView: View  {
             .padding([.top, .bottom], 10)
         }
         .padding(.bottom, 15)
-        .background(.white)
+        .background(Color.colorTheme.bgColor)
         .cornerRadius(10)
        
     }

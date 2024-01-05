@@ -61,7 +61,8 @@ struct LocationSearchDetailView: View {
                     print("result: \(viewModel.results)")
                 }
                 
-            }.background(.white)
+            }
+            .background(Color.colorTheme.bgColor)
         
     }
     

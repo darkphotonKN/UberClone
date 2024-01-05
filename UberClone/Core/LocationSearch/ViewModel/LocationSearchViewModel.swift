@@ -25,11 +25,6 @@ class LocationSearchViewModel: NSObject, ObservableObject {
     
     // local state for handling ride times
     private var route: MKRoute?
-//    {
-//        didSet {
-//            analyzePickupAndDropoffTime()
-//        }
-//    }
     
     // store user location
     var userLocation: CLLocationCoordinate2D? {
@@ -144,17 +139,10 @@ class LocationSearchViewModel: NSObject, ObservableObject {
             
             guard let route = response?.routes.first else { return }
             
-            // store route for other local state usage
-            // self.route = route
-            
-            // calculate destination time
-            
-            // remove this to fix endless state updates bug
-            // self.analyzePickupAndDropoffTime(expectedTravelTime: route.expectedTravelTime) // provided from directions from MKDirections
-            
             completion(route)
         }
     }
+    
     
     // sets the time for destination
     func analyzePickupAndDropoffTime() {
