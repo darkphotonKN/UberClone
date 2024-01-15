@@ -43,6 +43,7 @@ struct HomeView: View {
                 } else if(mapState == .searchingForLocation) {
                     // detail search
                     LocationSearchDetailView(mapState: $mapState)
+
                 }
             }
             

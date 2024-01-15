@@ -15,16 +15,21 @@ struct InputFieldView: View {
     
     var body: some View {
         
-        VStack {
-            HStack {
+        VStack(alignment: .leading) {
+
+            VStack {
                 Text(label)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Color.colorTheme.textColor)
                     .fontWeight(.semibold)
-                    .font(.system(size: 18))
-                Spacer()
-                
-                TextField(text: $inpValue, label: { Text(placeholder)})
+                    .font(.system(size: 14))
             }
+            
+            TextField(placeholder, text: $inpValue)
+                .foregroundStyle(Color.colorTheme.textColor)
+            
+            CustomDivider()
+                .padding(.top, 8)
+                .padding(.bottom, 14)
         }
     }
 }
