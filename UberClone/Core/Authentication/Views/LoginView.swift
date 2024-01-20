@@ -56,8 +56,7 @@ struct LoginView: View {
                                 Text("Forgot Password?")
                                     .font(.system(size: 14))
                                     .foregroundStyle(.white)
-                                
-                                
+                                   
                             }
                         }
                         
@@ -78,8 +77,6 @@ struct LoginView: View {
                             Rectangle()
                                 .frame(width: 80, height: 1)
                                 .foregroundStyle(Color.colorTheme.reverseBgColor)
-                            
-                            
                             
                         }.padding(.top, 30)
                         
