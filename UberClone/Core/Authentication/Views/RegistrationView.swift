@@ -14,6 +14,10 @@ struct RegistrationView: View {
     @State private var password: String = ""
     private let topBotOffset: CGFloat = 44
     
+    // for dismissing the navigation direction to this view
+    @Environment(\.dismiss) private var dismiss
+    
+    
     var body: some View {
         ZStack {
             Color(Color.colorTheme.bgColor).ignoresSafeArea()
@@ -21,7 +25,7 @@ struct RegistrationView: View {
                 VStack(alignment: .leading) {
                     // MARK: Return to Login
                     Button {
-                        print("Return to login")
+                        dismiss()
                     } label: {
                         Image(systemName: "arrow.left")
                             .foregroundStyle(Color.colorTheme.textColor)
