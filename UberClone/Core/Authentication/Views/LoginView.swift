@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    
+
     @State private var emailField: String = ""
     @State private var passwordField: String = ""
     
@@ -119,6 +119,7 @@ struct LoginView: View {
                            
                             NavigationLink {
                                 RegistrationView()
+                                    // hides the default back button on the top bar
                                     .navigationBarBackButtonHidden(true)
                                 
                             } label: {

@@ -30,6 +30,7 @@ struct UberMapViewRepresentable: UIViewRepresentable {
     func makeUIView(context: Context) -> some UIView {
         // context object gives us access to the coordinator
         mapView.delegate = context.coordinator
+        
         // configure map view settings
         mapView.isRotateEnabled = false
         mapView.showsUserLocation = true
