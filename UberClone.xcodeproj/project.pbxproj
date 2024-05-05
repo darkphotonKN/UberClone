@@ -19,6 +19,7 @@
 		8F00EB7B2B4888AD002E9A06 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00EB7A2B4888AD002E9A06 /* RegistrationView.swift */; };
 		8F00EB7E2B488CC9002E9A06 /* InputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00EB7D2B488CC9002E9A06 /* InputFieldView.swift */; };
 		8F00EB872B4A8A48002E9A06 /* CustomDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00EB862B4A8A48002E9A06 /* CustomDivider.swift */; };
+		8F9AF0EB2BE7B36000D15382 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 8F9AF0EA2BE7B36000D15382 /* .gitignore */; };
 		8FB6DC3B2B14ABE8007C3943 /* UberCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB6DC3A2B14ABE8007C3943 /* UberCloneApp.swift */; };
 		8FB6DC3F2B14ABE9007C3943 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FB6DC3E2B14ABE9007C3943 /* Assets.xcassets */; };
 		8FB6DC422B14ABE9007C3943 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FB6DC412B14ABE9007C3943 /* Preview Assets.xcassets */; };
@@ -48,6 +49,7 @@
 		8F00EB7A2B4888AD002E9A06 /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		8F00EB7D2B488CC9002E9A06 /* InputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldView.swift; sourceTree = "<group>"; };
 		8F00EB862B4A8A48002E9A06 /* CustomDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDivider.swift; sourceTree = "<group>"; };
+		8F9AF0EA2BE7B36000D15382 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		8FB6DC372B14ABE8007C3943 /* UberClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UberClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FB6DC3A2B14ABE8007C3943 /* UberCloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberCloneApp.swift; sourceTree = "<group>"; };
 		8FB6DC3E2B14ABE9007C3943 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				8FB6DC482B14AC09007C3943 /* App */,
 				8FB6DC3E2B14ABE9007C3943 /* Assets.xcassets */,
 				8FB6DC402B14ABE9007C3943 /* Preview Content */,
+				8F9AF0EA2BE7B36000D15382 /* .gitignore */,
 			);
 			path = UberClone;
 			sourceTree = "<group>";
@@ -328,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8FB6DC422B14ABE9007C3943 /* Preview Assets.xcassets in Resources */,
+				8F9AF0EB2BE7B36000D15382 /* .gitignore in Resources */,
 				8FB6DC3F2B14ABE9007C3943 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
