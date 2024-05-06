@@ -7,10 +7,44 @@
 
 import SwiftUI
 
+struct LoginInfo: Codable {
+    var email: String
+    var password: String
+}
+
+struct LoginApiResponse: Decodable {
+    let status: Int
+    let message: String
+    let user: User
+}
+
 struct LoginView: View {
 
     @State private var emailField: String = ""
     @State private var passwordField: String = ""
+    
+    
+    func handleLoginUser() {
+        print("emailField: \(emailField)")
+        print("passwordField: \(passwordField)")
+        
+        NetworkManager.shared.postRequest(url: "/auth/login", payload: LoginInfo(email: emailField, password: passwordField)) { (result: Result<LoginApiResponse, Error>) in
+            
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let apiResponse):
+                    print("DEBUG success response: \(apiResponse)")
+                    
+                case .failure(let error):
+                    print("DEBUG error after POST request: \(error)")
+                    
+                }
+            }
+        }
+        
+        
+    }
+    
     
     var body: some View {
         NavigationStack {
@@ -94,6 +128,8 @@ struct LoginView: View {
                         // MARK: Sign In Area
                         
                         Button {
+                            // handle logging in user
+                            handleLoginUser()
                             
                         } label: {
                             HStack {
