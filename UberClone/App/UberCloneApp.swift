@@ -14,6 +14,9 @@ struct UberCloneApp: App {
     // which after selected propogates the changes through the app
     @StateObject var locationViewModel = LocationSearchViewModel()
     
+    // single instance of user login information
+    //    @StateObject var userInfo: User?
+    
     var body: some Scene {
         WindowGroup {
             HomeView().environmentObject(locationViewModel)

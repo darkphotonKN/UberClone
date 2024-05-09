@@ -85,6 +85,7 @@ class NetworkManager {
             request.httpBody = jsonData // set body of request with json data
         
         } catch {
+            print("DEBUG error when encoding: \(error)")
             completion(.failure(error))
         }
         
@@ -96,9 +97,9 @@ class NetworkManager {
                 return
             }
             
-            
             // check for errors
             if let error = error  {
+                print("DEBUG error when making request: \(error)")
                 completion(.failure(error))
                 return
             }
@@ -109,11 +110,10 @@ class NetworkManager {
                 return
             }
             
-            print("DEBUG raw data: ", String(decoding: data, as: UTF8.self))
-            
-            // do-catch in attempt to decode data
+            // use the http status code to determine whether or not completion was a success
             switch httpResponse.statusCode {
             case 200, 201:
+                // do-catch in attempt to decode data
                 do {
                     let responseData = try JSONDecoder().decode(U.self, from: data)
                     completion(.success(responseData))

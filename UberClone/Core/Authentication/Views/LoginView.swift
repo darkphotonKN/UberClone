@@ -13,7 +13,7 @@ struct LoginInfo: Codable {
 }
 
 struct LoginApiResponse: Decodable {
-    let status: Int
+    let statusCode: Int
     let message: String
     let user: User
 }
