@@ -11,7 +11,7 @@ export class AuthController {
     const { email, password } = body;
 
     if (email === 'darkphoton20@gmail.com' && password === '123456') {
-      return {
+      const loginInfo = {
         status: 200,
         message: 'User successfully logged in.',
         user: {
@@ -20,6 +20,9 @@ export class AuthController {
           token: '123',
         },
       };
+      console.log('Credentials were correct, returning login info:', loginInfo);
+
+      return loginInfo;
     } else {
       throw new UnauthorizedException('Credentials were incorrect.');
     }

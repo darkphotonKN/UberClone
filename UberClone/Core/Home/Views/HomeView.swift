@@ -10,58 +10,68 @@ import SwiftUI
 struct HomeView: View {
     @State private var mapState: MapViewState = MapViewState.noInput
     @EnvironmentObject var viewModel: LocationSearchViewModel
+    @EnvironmentObject var userSessionManager: UserSessionManager
     
     var body: some View {
-        ZStack(alignment: .top) {
-            ZStack(alignment: .bottom) {
-                // MARK: Map
-                UberMapViewRepresentable(mapState: $mapState)
-                    .ignoresSafeArea()
-                // Ride Request Information
-                // show Ride Request View after user chooses a location
-                if(mapState == .locationSelected) {
-                    RideRequestView()
-                        .transition(.move(edge: .bottom)) // pairs with withAnimation to spring up from the bottom of the screen
-                }
+        Group {
+            // when user is not authenticated we always show login view
+            if(!userSessionManager.isAuthenticated) {
+                LoginView()
             }
-                        
-            
-            // MARK: Map Search Input Overlay
-            VStack {
-                // in non-search mode
-                if(mapState == .noInput) {
-                    // show main search bar and map
-                    LocationSearchView()
-                        .padding(.top, 77)
-                        .onTapGesture {
-                            withAnimation(.easeInOut) {
-                                // toggle back to main view
-                                mapState = .searchingForLocation
-                                // and show selected location details
-                            }
+            // otherwise we bring them to the home view
+            else {
+                ZStack(alignment: .top) {
+                    ZStack(alignment: .bottom) {
+                        // MARK: Map
+                        UberMapViewRepresentable(mapState: $mapState)
+                            .ignoresSafeArea()
+                        // Ride Request Information
+                        // show Ride Request View after user chooses a location
+                        if(mapState == .locationSelected) {
+                            RideRequestView()
+                                .transition(.move(edge: .bottom)) // pairs with withAnimation to spring up from the bottom of the screen
                         }
-                } else if(mapState == .searchingForLocation) {
-                    // detail search
-                    LocationSearchDetailView(mapState: $mapState)
-
-                }
-            }
-            
-            // MARK: Map Menu Button
-            HStack {
-                MapMenuButton(mapState: $mapState)
+                    }
                     
-                Spacer()
-            }
-
-        }
-        .edgesIgnoringSafeArea(.bottom)
-        // listen to the published state for changes
-        .onReceive(LocationManager.shared.$userLocation) { location in
-            if let location = location {
-                print("DEBUG: user location in home view \(location)")
-                // updates viewModel to follow the user location found in LocationManager
-                viewModel.userLocation = location
+                    
+                    // MARK: Map Search Input Overlay
+                    VStack {
+                        // in non-search mode
+                        if(mapState == .noInput) {
+                            // show main search bar and map
+                            LocationSearchView()
+                                .padding(.top, 77)
+                                .onTapGesture {
+                                    withAnimation(.easeInOut) {
+                                        // toggle back to main view
+                                        mapState = .searchingForLocation
+                                        // and show selected location details
+                                    }
+                                }
+                        } else if(mapState == .searchingForLocation) {
+                            // detail search
+                            LocationSearchDetailView(mapState: $mapState)
+                            
+                        }
+                    }
+                    
+                    // MARK: Map Menu Button
+                    HStack {
+                        MapMenuButton(mapState: $mapState)
+                        
+                        Spacer()
+                    }
+                    
+                }
+                .edgesIgnoringSafeArea(.bottom)
+                // listen to the published state for changes
+                .onReceive(LocationManager.shared.$userLocation) { location in
+                    if let location = location {
+                        print("DEBUG: user location in home view \(location)")
+                        // updates viewModel to follow the user location found in LocationManager
+                        viewModel.userLocation = location
+                    }
+                }
             }
         }
     }

@@ -19,10 +19,11 @@
 		8F00EB7B2B4888AD002E9A06 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00EB7A2B4888AD002E9A06 /* RegistrationView.swift */; };
 		8F00EB7E2B488CC9002E9A06 /* InputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00EB7D2B488CC9002E9A06 /* InputFieldView.swift */; };
 		8F00EB872B4A8A48002E9A06 /* CustomDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00EB862B4A8A48002E9A06 /* CustomDivider.swift */; };
+		8F91A60C2BED523B002EF264 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 8F91A60B2BED523B002EF264 /* KeychainAccess */; };
 		8F9AF0EB2BE7B36000D15382 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 8F9AF0EA2BE7B36000D15382 /* .gitignore */; };
 		8F9AF0EF2BE80A6200D15382 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AF0EE2BE80A6200D15382 /* NetworkManager.swift */; };
 		8F9AF0F12BE80A8D00D15382 /* config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AF0F02BE80A8D00D15382 /* config.swift */; };
-		8F9AF0F32BE80B6400D15382 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AF0F22BE80B6400D15382 /* AuthViewModel.swift */; };
+		8F9AF0F32BE80B6400D15382 /* UserSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AF0F22BE80B6400D15382 /* UserSessionManager.swift */; };
 		8F9AF0F52BE80C5300D15382 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9AF0F42BE80C5300D15382 /* User.swift */; };
 		8FB6DC3B2B14ABE8007C3943 /* UberCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB6DC3A2B14ABE8007C3943 /* UberCloneApp.swift */; };
 		8FB6DC3F2B14ABE9007C3943 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FB6DC3E2B14ABE9007C3943 /* Assets.xcassets */; };
@@ -56,7 +57,7 @@
 		8F9AF0EA2BE7B36000D15382 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		8F9AF0EE2BE80A6200D15382 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		8F9AF0F02BE80A8D00D15382 /* config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = config.swift; sourceTree = "<group>"; };
-		8F9AF0F22BE80B6400D15382 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		8F9AF0F22BE80B6400D15382 /* UserSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionManager.swift; sourceTree = "<group>"; };
 		8F9AF0F42BE80C5300D15382 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8FB6DC372B14ABE8007C3943 /* UberClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UberClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FB6DC3A2B14ABE8007C3943 /* UberCloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberCloneApp.swift; sourceTree = "<group>"; };
@@ -80,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F91A60C2BED523B002EF264 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,7 +120,7 @@
 		8F00EB792B488871002E9A06 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				8F9AF0F22BE80B6400D15382 /* AuthViewModel.swift */,
+				8F9AF0F22BE80B6400D15382 /* UserSessionManager.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -308,6 +310,9 @@
 			dependencies = (
 			);
 			name = UberClone;
+			packageProductDependencies = (
+				8F91A60B2BED523B002EF264 /* KeychainAccess */,
+			);
 			productName = UberClone;
 			productReference = 8FB6DC372B14ABE8007C3943 /* UberClone.app */;
 			productType = "com.apple.product-type.application";
@@ -336,6 +341,9 @@
 				Base,
 			);
 			mainGroup = 8FB6DC2E2B14ABE8007C3943;
+			packageReferences = (
+				8F91A60A2BED523B002EF264 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+			);
 			productRefGroup = 8FB6DC382B14ABE8007C3943 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -380,7 +388,7 @@
 				8F00EB722B457B02002E9A06 /* RideTimes.swift in Sources */,
 				8F00EB872B4A8A48002E9A06 /* CustomDivider.swift in Sources */,
 				8F00EB742B48263E002E9A06 /* Color.swift in Sources */,
-				8F9AF0F32BE80B6400D15382 /* AuthViewModel.swift in Sources */,
+				8F9AF0F32BE80B6400D15382 /* UserSessionManager.swift in Sources */,
 				8FB6DC552B14B1F0007C3943 /* UberMapViewRepresentable.swift in Sources */,
 				8F00EB772B488829002E9A06 /* LoginView.swift in Sources */,
 				8F9AF0F52BE80C5300D15382 /* User.swift in Sources */,
@@ -598,6 +606,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8F91A60A2BED523B002EF264 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8F91A60B2BED523B002EF264 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F91A60A2BED523B002EF264 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8FB6DC2F2B14ABE8007C3943 /* Project object */;
 }

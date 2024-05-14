@@ -118,7 +118,7 @@ class NetworkManager {
                     let responseData = try JSONDecoder().decode(U.self, from: data)
                     completion(.success(responseData))
                 } catch {
-                    completion(.failure(NetworkError.decodingError("Error decoding successful response")))
+                    completion(.failure(NetworkError.decodingError("Error decoding successful response: \(error)")))
                 }
             default:
                 do {

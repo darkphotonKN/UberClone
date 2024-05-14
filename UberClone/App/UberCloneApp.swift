@@ -13,13 +13,13 @@ struct UberCloneApp: App {
     // used to update the location information selected by the user,
     // which after selected propogates the changes through the app
     @StateObject var locationViewModel = LocationSearchViewModel()
-    
-    // single instance of user login information
-    //    @StateObject var userInfo: User?
+    @StateObject var userSessionManager = UserSessionManager()
     
     var body: some Scene {
         WindowGroup {
-            HomeView().environmentObject(locationViewModel)
+            HomeView()
+                .environmentObject(locationViewModel)
+                .environmentObject(userSessionManager)
         }
     }
 }

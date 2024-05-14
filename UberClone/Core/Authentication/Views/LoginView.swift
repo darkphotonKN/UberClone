@@ -7,44 +7,15 @@
 
 import SwiftUI
 
-struct LoginInfo: Codable {
-    var email: String
-    var password: String
-}
 
-struct LoginApiResponse: Decodable {
-    let statusCode: Int
-    let message: String
-    let user: User
-}
 
 struct LoginView: View {
+    @EnvironmentObject var userSessionManager: UserSessionManager
 
     @State private var emailField: String = ""
     @State private var passwordField: String = ""
     
-    
-    func handleLoginUser() {
-        print("emailField: \(emailField)")
-        print("passwordField: \(passwordField)")
-        
-        NetworkManager.shared.postRequest(url: "/auth/login", payload: LoginInfo(email: emailField, password: passwordField)) { (result: Result<LoginApiResponse, Error>) in
-            
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let apiResponse):
-                    print("DEBUG success response: \(apiResponse)")
-                    
-                case .failure(let error):
-                    print("DEBUG error after POST request: \(error)")
-                    
-                }
-            }
-        }
-        
-        
-    }
-    
+
     
     var body: some View {
         NavigationStack {
@@ -129,7 +100,7 @@ struct LoginView: View {
                         
                         Button {
                             // handle logging in user
-                            handleLoginUser()
+                            userSessionManager.login(email: emailField, password: passwordField)
                             
                         } label: {
                             HStack {
@@ -179,6 +150,12 @@ struct LoginView: View {
     }
 }
 
-#Preview {
-    LoginView()
+struct LoginView_Previews: PreviewProvider {
+    static var previews: some View {
+        // Create an instance of UserSessionManager
+        let sessionManager = UserSessionManager()
+
+        // Return the LoginView with the environment object provided
+        LoginView().environmentObject(sessionManager)
+    }
 }
