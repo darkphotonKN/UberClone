@@ -11,10 +11,11 @@ import SwiftUI
 
 struct LoginView: View {
     @EnvironmentObject var userSessionManager: UserSessionManager
+    @EnvironmentObject var appErrors: AppErrorViewModel
+
 
     @State private var emailField: String = ""
     @State private var passwordField: String = ""
-    
 
     
     var body: some View {
@@ -43,6 +44,15 @@ struct LoginView: View {
                     
                     // Core Content Area
                     VStack {
+                        
+                        // MARK: Error Message
+                        if let errorMsg = appErrors.apiErrorMessage {
+                            Text(errorMsg)
+                                .font(.system(size: 16, weight: .medium))
+                                .foregroundStyle(Color.colorTheme.textColorError)
+                                .padding(.bottom, 20)
+                        }
+                        
                         // MARK: Input Fields
                         
                         // email

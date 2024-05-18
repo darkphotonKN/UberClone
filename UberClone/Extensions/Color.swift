@@ -18,4 +18,5 @@ struct ColorTheme {
     var secondaryBgColor = Color("SecondaryBackgroundColor")
     var textColor = Color("PrimaryTextColor")
     var reverseTextColor = Color("ReverseTextColor")
+    var textColorError = Color("PrimaryTextError")
 }

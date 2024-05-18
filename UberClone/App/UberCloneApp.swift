@@ -14,12 +14,20 @@ struct UberCloneApp: App {
     // which after selected propogates the changes through the app
     @StateObject var locationViewModel = LocationSearchViewModel()
     @StateObject var userSessionManager = UserSessionManager()
+    @StateObject var appErrors = AppErrorViewModel()
     
+//    init() {
+//        
+//    }
+//    
     var body: some Scene {
         WindowGroup {
             HomeView()
                 .environmentObject(locationViewModel)
                 .environmentObject(userSessionManager)
+                .environmentObject(appErrors).onAppear() {
+                    userSessionManager.appErrors = appErrors
+                }
         }
     }
 }

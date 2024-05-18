@@ -7,7 +7,7 @@
 
 
 
- 
+import SwiftUI
 import Foundation
 import KeychainAccess
 
@@ -34,6 +34,8 @@ struct LoginApiResponse: Decodable {
 }
 
 class UserSessionManager: ObservableObject {
+    var appErrors: AppErrorViewModel?
+    
     @Published var user: User?
     @Published var isAuthenticated: Bool = false
     // setup keychain
@@ -43,6 +45,9 @@ class UserSessionManager: ObservableObject {
     
 
     func login(email: String, password: String) {
+        
+        print("appErrors:", appErrors?.apiErrorMessage)
+        
         NetworkManager.shared.postRequest(url: "/auth/login", payload: LoginInfo(email: email, password: password)) { (result: Result<LoginApiResponse, Error>) in
             
             DispatchQueue.main.async {
@@ -65,12 +70,18 @@ class UserSessionManager: ObservableObject {
                         print("DEBUG success response: \(response)")
                     } catch {
                         print("DEBUG error response: \(error)")
+                        
+                        // set global error
+                        self.appErrors?.setError(error: error)
                     }
                     
                     // login failed
                 case .failure(let error):
                     self.isAuthenticated = false
                     print("DEBUG error after POST request: \(error)")
+                    
+                    // set global error
+                    self.appErrors?.setError(error: error)
                     
                 }
             }
