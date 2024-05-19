@@ -8,11 +8,24 @@
 import Foundation
 
 // Custom error types to handle various scenarios
-enum NetworkError: Error {
+enum NetworkError: Error, LocalizedError {
     case urlError
     case decodingError(String)
     case serverError(String)
     case unknownError
+    
+    var errorDescription: String? {
+            switch self {
+            case .urlError:
+                return NSLocalizedString("URL formation error.", comment: "URL Error")
+            case .decodingError(let message):
+                return NSLocalizedString(message, comment: "Decoding Error")
+            case .serverError(let message):
+                return NSLocalizedString(message, comment: "Server Error")
+            case .unknownError:
+                return NSLocalizedString("An unknown error occurred.", comment: "Unknown Error")
+            }
+        }
 }
 
 // API Error
@@ -20,6 +33,39 @@ struct ApiError: Decodable, Error {
     let statusCode: Int
     let message: String
     let error: String
+}
+
+// HTTP Status Codes
+enum HTTPStatusCode: Int {
+    case ok = 200
+    case notFound = 404
+    case unauthorized = 401
+    case forbidden = 403
+    case internalServerError = 500
+
+    var shouldRetry: Bool {
+        switch self {
+        case .ok, .notFound, .forbidden:
+            return false
+        case .unauthorized, .internalServerError:
+            return true
+        }
+    }
+
+    var description: String {
+        switch self {
+        case .ok:
+            return "The operation completed successfully."
+        case .notFound:
+            return "The requested resource was not found."
+        case .unauthorized:
+            return "Authentication is required."
+        case .forbidden:
+            return "Access is forbidden."
+        case .internalServerError:
+            return "An internal server error occurred."
+        }
+    }
 }
 
 class NetworkManager {

@@ -46,8 +46,6 @@ class UserSessionManager: ObservableObject {
 
     func login(email: String, password: String) {
         
-        print("appErrors:", appErrors?.apiErrorMessage)
-        
         NetworkManager.shared.postRequest(url: "/auth/login", payload: LoginInfo(email: email, password: password)) { (result: Result<LoginApiResponse, Error>) in
             
             DispatchQueue.main.async {
@@ -71,6 +69,7 @@ class UserSessionManager: ObservableObject {
                     } catch {
                         print("DEBUG error response: \(error)")
                         
+                        print("@.catch setting error with: \(error)")
                         // set global error
                         self.appErrors?.setError(error: error)
                     }
@@ -80,6 +79,7 @@ class UserSessionManager: ObservableObject {
                     self.isAuthenticated = false
                     print("DEBUG error after POST request: \(error)")
                     
+                    print("@.falure setting error with: \(error)")
                     // set global error
                     self.appErrors?.setError(error: error)
                     

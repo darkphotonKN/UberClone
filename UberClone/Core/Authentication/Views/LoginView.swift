@@ -13,10 +13,9 @@ struct LoginView: View {
     @EnvironmentObject var userSessionManager: UserSessionManager
     @EnvironmentObject var appErrors: AppErrorViewModel
 
-
     @State private var emailField: String = ""
     @State private var passwordField: String = ""
-
+    
     
     var body: some View {
         NavigationStack {
@@ -46,12 +45,17 @@ struct LoginView: View {
                     VStack {
                         
                         // MARK: Error Message
-                        if let errorMsg = appErrors.apiErrorMessage {
-                            Text(errorMsg)
-                                .font(.system(size: 16, weight: .medium))
-                                .foregroundStyle(Color.colorTheme.textColorError)
-                                .padding(.bottom, 20)
-                        }
+
+                            
+                        Text(appErrors.apiErrorMessage ?? "")
+                            .font(.system(size: 16, weight: .medium))
+                            .foregroundStyle(Color.colorTheme.textColorError)
+                            .padding(.bottom, 20)
+                        
+                        
+                        // MARK: Error Message
+                        
+                        
                         
                         // MARK: Input Fields
                         
@@ -111,6 +115,7 @@ struct LoginView: View {
                         Button {
                             // handle logging in user
                             userSessionManager.login(email: emailField, password: passwordField)
+                            
                             
                         } label: {
                             HStack {
