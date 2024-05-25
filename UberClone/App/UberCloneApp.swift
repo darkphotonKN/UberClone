@@ -15,11 +15,7 @@ struct UberCloneApp: App {
     @StateObject var locationViewModel = LocationSearchViewModel()
     @StateObject var userSessionManager = UserSessionManager()
     @StateObject var appErrors = AppErrorViewModel()
-    
-//    init() {
-//        
-//    }
-//    
+
     var body: some Scene {
         WindowGroup {
             HomeView()
